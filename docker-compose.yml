@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  db:
+    container_name: postgresql
+    image: postgres:14.0-alpine
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgres/data/back-test
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./src/.env
+    networks:
+       - main_bridge
+  web:
+    container_name: bot_test
+    build: ./src
+    restart: always
+    command: python __main__.py
+    volumes:
+      - ./src:/usr/src/
+    env_file:
+      - ./src/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - main_bridge
+
+  redis:
+    image: redis/redis-stack
+    container_name: redis_for_bot
+    ports:
+      - "6379:6379"
+      - "6380:8001"
+    volumes:
+      - ./redis/data/:/data
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - main_bridge
+
+networks:
+  main_bridge:
+    driver: bridge
