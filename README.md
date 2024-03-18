@@ -38,9 +38,13 @@ ___
 #### 1. Получение TG_ACCESS_URL
 Я использовала ngrok для создания туннеля
 
-Команда
+Команда для запуска вариантом 1 (ниже)
 ```
 ngrok http http://127.0.0.1:8000
+```
+или вариант 2
+```
+ngrok http http://0.0.0.0:8000
 ```
 Копируем URL https://... и вставляем в TG_ACCESS_URL
 #### 2. В папке /web создаем файл ```.env``` с переменными
@@ -55,22 +59,50 @@ POSTGRES_DB
 
 TG_ACCESS_URL
 ````
-#### 3. Запуск для разработки
+#### 3. Запуск 
+
+### Вариант 1 (через Docker)
+#### 3.1. Проверяем
+В [__init__.py](src%2Fapp%2Fconfig%2F__init__.py) 
+```HOST = '0.0.0.0'```
+
+В /src/.env 
+```
+POSTGRES_HOST=dbtg
+...
+TG_ACCESS_URL=https://...
+```
+#### 3.2. Запускаем Docker
+Запускаем команду в терминале
+```
+docker-compose up
+```
+#### 3.3. Заходим по адресу
+http://localhost:8000/ticket-bot/docs
+
+Миграции можно пропустить
+
+### Вариант 2
 #### 3.1. Меняем хост
 В [__init__.py](src%2Fapp%2Fconfig%2F__init__.py) 
 указываем ```HOST = '127.0.0.1'``` вместо ```HOST = '0.0.0.0'```
 
+В /src/.env 
+```
+TG_ACCESS_URL=https://...
+```
 #### 3.2. Запуск Docker
 Запускаем команду в терминале
 ```
 docker-compose up
 ```
-Отключаем контейнер web (он не работает)
+Отключаем контейнер web
 #### 3.3. Запускаем __main__.py
 Запускаем команду в терминале
 ```
 python __main__.py
 ```
+Переходим к миграциям
 
 ### 4.Миграции
 #### Первый запуск
@@ -83,6 +115,8 @@ Success write config to pyproject.toml
 Success create app migrate location migrations/models
 Success generate schema for app "models"
 ```
+Сайт по адресу http://127.0.0.1:8000/ticket-bot/docs
+
 ### requirements.txt
 ```requirements.txt
 uvicorn==0.28.0

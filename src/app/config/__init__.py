@@ -14,7 +14,7 @@ DATABASE = {
             'default': {
                 'engine': 'tortoise.backends.asyncpg',
                 'credentials': {
-                    'host': os.environ.get('POSTGRES_HOST', 'dbtg'),  # docker: на ошибку влияет вот этот хост (ошибка connect_failed) контейнер web
+                    'host': os.environ.get('POSTGRES_HOST', 'dbtg'),
                     'port': os.environ.get('POSTGRES_PORT', '5432'),
                     'user': os.environ.get('POSTGRES_USER'),
                     'password': os.environ.get('POSTGRES_PASSWORD'),
@@ -34,9 +34,8 @@ DATABASE = {
 
 
 class Settings(BaseSettings):
-    HOST: str = '127.0.0.1'
-    # HOST: str = '0.0.0.0'
-
+    # HOST: str = '127.0.0.1'
+    HOST: str = '0.0.0.0'
 
     PORT: int = int(os.environ.get('SERVICE_PORT', 80))
 

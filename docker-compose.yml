@@ -18,8 +18,11 @@ services:
   web:
     container_name: bot_test
     build: ./src
-    restart: always
-    command: python __main__.py
+    restart: on-failure
+    command:
+      bash -c "aerich init -t app.config.DATABASE && 
+      aerich upgrade && 
+      python __main__.py"
     volumes:
       - ./src:/usr/src/
     environment:
