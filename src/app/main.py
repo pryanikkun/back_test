@@ -23,7 +23,6 @@ def register_events(api):
     api.on_event('startup')(startup_redis)
     api.on_event('startup')(make_db_account_redis)
     api.on_event('shutdown')(shutdown_redis)
-#     api.on_event('shutdown')()
 
 
 def setup_app() -> FastAPI:

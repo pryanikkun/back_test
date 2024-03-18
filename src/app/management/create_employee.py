@@ -3,13 +3,11 @@ import hashlib
 import asyncio
 import time
 
-import asyncio_redis
 from tortoise import Tortoise
 from tortoise.exceptions import IntegrityError
 
 from src.app.models import Employee
 from src.app import redis
-from src.app.config import settings
 
 DATABASE = {
         'connections': {
@@ -37,6 +35,7 @@ DATABASE = {
 
 
 async def setup_db():
+    """ Подключение к Tortoise-ORM и redis """
     await Tortoise.init(
         config=DATABASE
     )
@@ -45,6 +44,7 @@ async def setup_db():
 
 
 async def create_account(username: str, password: str):
+    """ Создание сотрудника """
     hashed_password = hashlib.sha1(password.encode()).hexdigest()
     await setup_db()
     try:

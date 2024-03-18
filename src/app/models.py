@@ -5,7 +5,7 @@ from enum import Enum
 
 class StatesOfTicket(Enum):
     """Этапы диалога с ботом"""
-    OPEN = "OPEN"                                             # Состояние начала диалога
+    OPEN = "OPEN"
     IN_PROGRESS = "IN_PROGRESS"
     CLOSED = "CLOSED"
 
@@ -38,7 +38,6 @@ class Employee(models.Model):
 
 
 class Ticket(models.Model):
-    text = fields.TextField(null=True, description="Text ticket")
     status = fields.CharEnumField(
         enum_type=StatesOfTicket, description='Status ticket')
     ticket_date = fields.DatetimeField(
@@ -49,10 +48,11 @@ class Ticket(models.Model):
     employee = fields.ForeignKeyField(
         'models.Employee', related_name='tickets', null=True, on_delete=fields.SET_NULL
     )
-
-    # class PydanticMeta:
-    #     backward_relations = False
-    #     exclude = ['client', 'employee_id']
+    messages: fields.ReverseRelation['Message']
 
 
-
+class Message(models.Model):
+    text = fields.TextField(null=True, description="Messsage ticket")
+    ticket = fields.ForeignKeyField(
+        'models.Ticket', related_name='messages', null=True, on_delete=fields.SET_NULL
+    )

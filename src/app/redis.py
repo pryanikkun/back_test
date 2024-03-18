@@ -5,6 +5,7 @@ from .config import settings
 
 
 async def init_pool_account_redis():
+    """ Создание пула в redis"""
     redis_connect = await asyncio_redis.Pool.create(
         host=settings.REDIS_HOST,
         port=int(settings.REDIS_PORT),
@@ -33,6 +34,7 @@ class RedisStorage:
         return value
 
     def close(self):
+        """ Закрытие сессии """
         self.session.close()
 
 

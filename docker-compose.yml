@@ -1,7 +1,8 @@
 version: '3.6'
 
 services:
-  db:
+
+  dbtg:
     container_name: postgresql
     image: postgres:14.0-alpine
     restart: always
@@ -13,6 +14,7 @@ services:
       - ./src/.env
     networks:
        - main_bridge
+
   web:
     container_name: bot_test
     build: ./src
@@ -20,12 +22,17 @@ services:
     command: python __main__.py
     volumes:
       - ./src:/usr/src/
+    environment:
+      - REDIS_HOST=redis
     env_file:
       - ./src/.env
     ports:
       - "8000:8000"
     networks:
       - main_bridge
+    depends_on:
+      - dbtg
+      - redis
 
   redis:
     image: redis/redis-stack
@@ -38,6 +45,8 @@ services:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - main_bridge
+    depends_on:
+      - dbtg
 
 networks:
   main_bridge:
