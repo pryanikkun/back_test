@@ -1,8 +1,7 @@
 import types
-from fastapi import FastAPI, APIRouter, Depends
+from fastapi import FastAPI, APIRouter
 from aiogram import types
 
-from ..dependency import login_required
 from .crud import clients_router, tickets_router, employees_router, \
     messages_router
 from ..handler.bot import dp, bot

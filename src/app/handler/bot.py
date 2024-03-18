@@ -58,9 +58,6 @@ async def message_ticket(message: types.Message):
             text=message.text,
             ticket_id=ticket.id
         )
-        await bot.send_message(
-            chat_id=message.chat.id,
-            text="Скоро мы с вами свяжемся :)")
     else:
         await bot.send_message(
             chat_id=message.chat.id,
