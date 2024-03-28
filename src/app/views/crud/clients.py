@@ -7,9 +7,10 @@ from ..schemas import Client_Pydantic, Status
 
 clients = APIRouter(
     prefix="/clients",
-    tags=["clients"],
-    dependencies=[Depends(login_required), ]
-)
+    tags=["clients"])
+#     ,
+#     dependencies=[Depends(login_required), ]
+# )
 
 
 @clients.get('/clients')

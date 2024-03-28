@@ -10,8 +10,9 @@ from ..schemas import Ticket_Pydantic, TicketPost_Pydantic, Status, \
 
 tickets = APIRouter(
     prefix="/tickets",
-    tags=["tickets"],
-    dependencies=[Depends(login_required), ]
+    tags=["tickets"]
+    # ,
+    # dependencies=[Depends(login_required), ]
 )
 
 

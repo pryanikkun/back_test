@@ -20,9 +20,9 @@ def setup_tortoise(api: FastAPI):
 
 def register_events(api):
     api.on_event('startup')(check_bot_access)
-    api.on_event('startup')(startup_redis)
-    api.on_event('startup')(make_db_account_redis)
-    api.on_event('shutdown')(shutdown_redis)
+    # api.on_event('startup')(startup_redis)
+    # api.on_event('startup')(make_db_account_redis)
+    # api.on_event('shutdown')(shutdown_redis)
 
 
 def setup_app() -> FastAPI:
